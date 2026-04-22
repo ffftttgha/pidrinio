@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Точка выбора | Профессия</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profession-detail {
+            padding: 120px 0 60px;
+            background: var(--bg-color);
+        }
+        .detail-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+        .detail-card h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Точка <span>Выбора</span></div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="index.html#professions">Профессии</a></li>
+                </ul>
+                <div class="header-right">
+                    <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i><span>Тёмная тема</span></button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="profession-detail">
+        <div class="container">
+            <a href="index.html#professions" class="back-link"><i class="fas fa-arrow-left"></i> Назад к профессиям</a>
+            <div class="detail-card" id="professionDetailContainer">
+                <div style="text-align:center;">Загрузка...</div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="background:#020617; color:white; text-align:center; padding:30px 0;">
+        <p>&copy; 2026 Точка выбора. Все права защищены.</p>
+    </footer>
+
+    <script type="module">
+        import { api } from './js/api.js';
+        import { initModalClosers } from './js/utils.js';
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+        if (!id) {
+            document.getElementById('professionDetailContainer').innerHTML = '<p>Профессия не указана</p>';
+        } else {
+            try {
+                const profession = await api.getProfession(id);
+                document.getElementById('professionDetailContainer').innerHTML = `
+                    <h1>${profession.name}</h1>
+                    <p><strong>Категория:</strong> ${profession.category}</p>
+                    <p><strong>Описание:</strong> ${profession.description}</p>
+                    <p><strong>Необходимые навыки:</strong> ${profession.skills}</p>
+                    <p><strong>Где учиться:</strong> ${profession.education}</p>
+                    <p><strong>Зарплата:</strong> ${profession.salary_range || 'не указана'}</p>
+                    <p><strong>Востребованность:</strong> ${profession.demand || 'не указана'}</p>
+                `;
+            } catch(err) {
+                document.getElementById('professionDetailContainer').innerHTML = '<p>Ошибка загрузки профессии</p>';
+            }
+        }
+
+        // Тёмная тема
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const themeToggle = document.getElementById('themeToggle');
+        function updateThemeButton(theme) {
+            const icon = themeToggle.querySelector('i');
+            const span = themeToggle.querySelector('span');
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+                span.innerText = 'Светлая тема';
+            } else {
+                icon.className = 'fas fa-moon';
+                span.innerText = 'Тёмная тема';
+            }
+        }
+        updateThemeButton(savedTheme);
+        themeToggle.addEventListener('click', () => {
+            const current = document.documentElement.getAttribute('data-theme');
+            const newTheme = current === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeButton(newTheme);
+        });
+    </script>
+</body>
+</html>
