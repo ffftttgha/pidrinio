@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Бесплатный онлайн-сервис профориентации для подростков 13-18 лет">
     <title>Точка выбора | Профориентация для подростков</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -13,32 +14,41 @@
         <div class="container">
             <nav>
                 <div class="logo">Точка <span>Выбора</span></div>
-                <ul class="nav-links">
+                <ul class="nav-links" id="navLinks">
                     <li><a href="#home">Главная</a></li>
                     <li><a href="#about">О проекте</a></li>
                     <li><a href="#testing">Тестирование</a></li>
                     <li><a href="#professions">Профессии</a></li>
                     <li><a href="#team">Команда</a></li>
                     <li><a href="#contact">Контакты</a></li>
-                    <li><a href="#" id="profileLink">Личный кабинет</a></li>
+                    <li><a href="#" id="profileLink"><i class="fas fa-user-circle"></i> Личный кабинет</a></li>
                 </ul>
                 <div class="header-right">
                     <button class="theme-toggle" id="themeToggle">
                         <i class="fas fa-moon"></i><span>Тёмная тема</span>
                     </button>
-                    <div class="mobile-menu"><i class="fas fa-bars"></i></div>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню">
+                        <i class="fas fa-bars"></i>
+                    </button>
                 </div>
             </nav>
         </div>
     </header>
 
+    <!-- Оверлей для мобильного меню -->
+    <div class="nav-mobile-overlay" id="navOverlay"></div>
+
     <section class="hero" id="home">
         <div class="container">
             <h1>Найди свою профессию —<br>начни путь к успеху!</h1>
-            <p>Бесплатный онлайн-сервис профориентации для подростков 13-18 лет</p>
+            <p>Бесплатный онлайн-сервис профориентации для подростков 13–18 лет</p>
             <div class="hero-buttons">
-                <button class="btn btn-secondary" id="startTestBtn">Пройти тестирование</button>
-                <a href="#professions" class="btn btn-primary" style="background: white; color: var(--primary-color);">Смотреть профессии</a>
+                <button class="btn btn-secondary" id="startTestBtn">
+                    <i class="fas fa-play"></i> Пройти тестирование
+                </button>
+                <a href="#professions" class="btn" style="background: white; color: var(--primary-color);">
+                    <i class="fas fa-briefcase"></i> Смотреть профессии
+                </a>
             </div>
         </div>
     </section>
@@ -46,10 +56,10 @@
     <section class="stats">
         <div class="container">
             <div class="stats-grid">
-                <div class="stat-item"><h3 id="users-count">0</h3><p>Пользователей</p></div>
-                <div class="stat-item"><h3 id="tests-count">0</h3><p>Пройдено тестов</p></div>
-                <div class="stat-item"><h3 id="professions-count">0</h3><p>Профессий</p></div>
-                <div class="stat-item"><h3 id="partners-count">0</h3><p>Партнёров</p></div>
+                <div class="stat-item"><h3 id="users-count">—</h3><p>Пользователей</p></div>
+                <div class="stat-item"><h3 id="tests-count">—</h3><p>Пройдено тестов</p></div>
+                <div class="stat-item"><h3 id="professions-count">—</h3><p>Профессий</p></div>
+                <div class="stat-item"><h3>4</h3><p>Направления</p></div>
             </div>
         </div>
     </section>
@@ -58,9 +68,21 @@
         <div class="container">
             <h2>Как это работает?</h2>
             <div class="about-grid">
-                <div class="about-card"><i class="fas fa-clipboard-list"></i><h3>Пройди тест</h3><p>Ответь на вопросы о своих интересах, навыках и предпочтениях</p></div>
-                <div class="about-card"><i class="fas fa-chart-line"></i><h3>Получи анализ</h3><p>Система проанализирует твои ответы и подберёт подходящие профессии</p></div>
-                <div class="about-card"><i class="fas fa-graduation-cap"></i><h3>Выбери путь</h3><p>Изучи информацию о профессиях и учебных заведениях</p></div>
+                <div class="about-card">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Пройди тест</h3>
+                    <p>Ответь на вопросы о своих интересах, навыках и предпочтениях</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Получи анализ</h3>
+                    <p>Система проанализирует твои ответы и подберёт подходящие профессии</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h3>Выбери путь</h3>
+                    <p>Изучи информацию о профессиях и учебных заведениях</p>
+                </div>
             </div>
         </div>
     </section>
@@ -69,13 +91,31 @@
         <div class="container">
             <h2>Этапы тестирования</h2>
             <div class="test-steps">
-                <div class="step"><div class="step-number">1</div><h3>Диагностика интересов</h3><p>20-30 вопросов о твоих увлечениях и предпочтениях</p></div>
-                <div class="step"><div class="step-number">2</div><h3>Оценка навыков</h3><p>Определим твои сильные стороны и способности</p></div>
-                <div class="step"><div class="step-number">3</div><h3>Рекомендации</h3><p>Получи топ-5 профессий с подробным описанием</p></div>
-                <div class="step"><div class="step-number">4</div><h3>Персональный отчёт</h3><p>Скачай PDF с результатами и рекомендациями</p></div>
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Диагностика интересов</h3>
+                    <p>20–30 вопросов о твоих увлечениях и предпочтениях</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Оценка навыков</h3>
+                    <p>Определим твои сильные стороны и способности</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Рекомендации</h3>
+                    <p>Получи топ-5 профессий с подробным описанием</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Персональный отчёт</h3>
+                    <p>Сохрани результаты в личном кабинете</p>
+                </div>
             </div>
             <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-secondary" id="startTestBtn2">Начать тестирование</button>
+                <button class="btn btn-secondary" id="startTestBtn2">
+                    <i class="fas fa-play"></i> Начать тестирование
+                </button>
             </div>
         </div>
     </section>
@@ -85,12 +125,17 @@
             <h2>Каталог профессий</h2>
             <div class="filter-buttons" id="filterButtons">
                 <button class="filter-btn active" data-cat="all">Все</button>
-                <button class="filter-btn" data-cat="it">IT</button>
-                <button class="filter-btn" data-cat="design">Дизайн</button>
-                <button class="filter-btn" data-cat="science">Наука</button>
-                <button class="filter-btn" data-cat="business">Бизнес</button>
+                <button class="filter-btn" data-cat="it"><i class="fas fa-code"></i> IT</button>
+                <button class="filter-btn" data-cat="design"><i class="fas fa-paint-brush"></i> Дизайн</button>
+                <button class="filter-btn" data-cat="science"><i class="fas fa-flask"></i> Наука</button>
+                <button class="filter-btn" data-cat="business"><i class="fas fa-chart-bar"></i> Бизнес</button>
             </div>
-            <div class="profession-grid" id="professionsGrid"></div>
+            <div class="profession-grid" id="professionsGrid">
+                <div style="text-align:center; padding: 40px; color: var(--gray-color); grid-column: 1/-1;">
+                    <i class="fas fa-spinner fa-spin" style="font-size:32px; margin-bottom:12px; display:block;"></i>
+                    Загрузка профессий...
+                </div>
+            </div>
         </div>
     </section>
 
@@ -117,13 +162,17 @@
                     <p><i class="fas fa-map-marker-alt"></i> г. Сочи, ул. Пластунская, 94</p>
                     <p><i class="fas fa-envelope"></i> info@tochkavibora.ru</p>
                     <p><i class="fas fa-phone"></i> +7 (862) 000-00-00</p>
-                    <div><a href="#"><i class="fab fa-vk"></i></a> <a href="#"><i class="fab fa-telegram"></i></a> <a href="#"><i class="fab fa-youtube"></i></a></div>
+                    <div class="contact-socials">
+                        <a href="#" title="ВКонтакте"><i class="fab fa-vk"></i></a>
+                        <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
                 </div>
                 <div class="contact-form">
                     <form id="feedbackForm">
                         <input type="text" placeholder="Ваше имя" required>
                         <input type="email" placeholder="Ваш email" required>
-                        <textarea placeholder="Ваше сообщение"></textarea>
+                        <textarea placeholder="Ваше сообщение" rows="4"></textarea>
                         <button type="submit" class="btn btn-secondary">Отправить</button>
                     </form>
                 </div>
@@ -140,14 +189,39 @@
                 <a href="#">Для учителей</a>
             </div>
             <p>&copy; 2026 Точка выбора. Все права защищены.</p>
-            <p style="font-size: 12px; margin-top: 10px;">Проект студентов Сочинского государственного университета</p>
+            <p style="font-size: 12px; margin-top: 8px; opacity: 0.6;">Проект студентов Сочинского государственного университета</p>
         </div>
     </footer>
 
     <!-- Модалки -->
-    <div class="modal" id="testModal"><div class="modal-content"><span class="modal-close">&times;</span><h3>Профориентационный тест</h3><div id="testContainer"></div></div></div>
-    <div class="modal" id="professionModal"><div class="modal-content"><span class="modal-close">&times;</span><div id="professionDetail"></div></div></div>
-    <div class="modal" id="authModal"><div class="modal-content"><span class="modal-close">&times;</span><div id="authContainer"></div></div></div>
+    <div class="modal" id="testModal">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="testModal">&times;</span>
+            <h3 style="margin-bottom: 20px;">Профориентационный тест</h3>
+            <div id="testContainer"></div>
+        </div>
+    </div>
+    <div class="modal" id="professionModal">
+        <div class="modal-content">
+            <span class="modal-close" data-modal="professionModal">&times;</span>
+            <div id="professionDetail"></div>
+        </div>
+    </div>
+    <div class="modal" id="authModal">
+        <div class="modal-content" style="max-width: 440px;">
+            <span class="modal-close" data-modal="authModal">&times;</span>
+            <div id="authContainer"></div>
+        </div>
+    </div>
+    <div class="modal" id="profileModal">
+        <div class="modal-content" style="max-width: 480px;">
+            <span class="modal-close" data-modal="profileModal">&times;</span>
+            <div id="profileContainer"></div>
+        </div>
+    </div>
+
+    <!-- Тост-уведомления -->
+    <div id="toast-container"></div>
 
     <script type="module" src="js/main.js"></script>
 </body>
