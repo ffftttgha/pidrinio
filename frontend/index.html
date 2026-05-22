@@ -10,220 +10,252 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">Точка <span>Выбора</span></div>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#home">Главная</a></li>
-                    <li><a href="#about">О проекте</a></li>
-                    <li><a href="#testing">Тестирование</a></li>
-                    <li><a href="#professions">Профессии</a></li>
-                    <li><a href="#team">Команда</a></li>
-                    <li><a href="#contact">Контакты</a></li>
-                    <li><a href="#" id="profileLink"><i class="fas fa-user-circle"></i> Личный кабинет</a></li>
-                </ul>
-                <div class="header-right">
-                    <button class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i><span>Тёмная тема</span>
+    <div class="parallax-bg">
+        <div class="parallax-layer layer-1"></div>
+        <div class="parallax-layer layer-2"></div>
+        <div class="parallax-layer layer-3"></div>
+    </div>
+
+    <div class="parallax-sphere sphere-1" id="hero-sphere-1"></div>
+    <div class="parallax-sphere sphere-2" id="hero-sphere-2"></div>
+    <div class="parallax-sphere sphere-3" id="hero-sphere-3"></div>
+
+    <div class="site-content">
+        
+        <header>
+            <div class="container">
+                <nav>
+                    <div class="logo">Точка <span>Выбора</span></div>
+                    <ul class="nav-links" id="navLinks">
+                        <button class="nav-mobile-close" id="navCloseBtn" aria-label="Закрыть меню">&times;</button>
+                        
+                        <li><a href="#home" class="active">Главная</a></li>
+                        <li><a href="#about">О проекте</a></li>
+                        <li><a href="#testing">Тестирование</a></li>
+                        <li><a href="#professions">Профессии</a></li>
+                        <li><a href="#team">Команда</a></li>
+                        <li><a href="#contact">Контакты</a></li>
+                        <li><a href="#" id="profileLink"><i class="fas fa-user-circle"></i> Личный кабинет</a></li>
+                    </ul>
+                    <div class="header-right">
+                        <button class="theme-toggle" id="themeToggle">
+                            <i class="fas fa-moon"></i><span>Тёмная тема</span>
+                        </button>
+                        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Открыть меню">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <div class="nav-mobile-overlay" id="navOverlay"></div>
+
+        <section class="hero" id="home">
+            <div class="container">
+                <h1>Найди свою профессию —<br>начни путь к успеху!</h1>
+                <p>Бесплатный онлайн-сервис профориентации для подростков 13–18 лет</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-secondary" id="startTestBtn">
+                        <i class="fas fa-play"></i> Пройти тестирование
                     </button>
-                    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Меню">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Оверлей для мобильного меню -->
-    <div class="nav-mobile-overlay" id="navOverlay"></div>
-
-    <section class="hero" id="home">
-        <div class="container">
-            <h1>Найди свою профессию —<br>начни путь к успеху!</h1>
-            <p>Бесплатный онлайн-сервис профориентации для подростков 13–18 лет</p>
-            <div class="hero-buttons">
-                <button class="btn btn-secondary" id="startTestBtn">
-                    <i class="fas fa-play"></i> Пройти тестирование
-                </button>
-                <a href="#professions" class="btn" style="background: white; color: var(--primary-color);">
-                    <i class="fas fa-briefcase"></i> Смотреть профессии
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item"><h3 id="users-count">—</h3><p>Пользователей</p></div>
-                <div class="stat-item"><h3 id="tests-count">—</h3><p>Пройдено тестов</p></div>
-                <div class="stat-item"><h3 id="professions-count">—</h3><p>Профессий</p></div>
-                <div class="stat-item"><h3>4</h3><p>Направления</p></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="about" id="about">
-        <div class="container">
-            <h2>Как это работает?</h2>
-            <div class="about-grid">
-                <div class="about-card">
-                    <i class="fas fa-clipboard-list"></i>
-                    <h3>Пройди тест</h3>
-                    <p>Ответь на вопросы о своих интересах, навыках и предпочтениях</p>
-                </div>
-                <div class="about-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Получи анализ</h3>
-                    <p>Система проанализирует твои ответы и подберёт подходящие профессии</p>
-                </div>
-                <div class="about-card">
-                    <i class="fas fa-graduation-cap"></i>
-                    <h3>Выбери путь</h3>
-                    <p>Изучи информацию о профессиях и учебных заведениях</p>
+                    <a href="#professions" class="btn btn-outline">
+                        <i class="fas fa-briefcase"></i> Смотреть профессии
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="testing" id="testing">
-        <div class="container">
-            <h2>Этапы тестирования</h2>
-            <div class="test-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Диагностика интересов</h3>
-                    <p>20–30 вопросов о твоих увлечениях и предпочтениях</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Оценка навыков</h3>
-                    <p>Определим твои сильные стороны и способности</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Рекомендации</h3>
-                    <p>Получи топ-5 профессий с подробным описанием</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>Персональный отчёт</h3>
-                    <p>Сохрани результаты в личном кабинете</p>
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item"><h3 id="users-count">—</h3><p>Пользователей</p></div>
+                    <div class="stat-item"><h3 id="tests-count">—</h3><p>Пройдено тестов</p></div>
+                    <div class="stat-item"><h3 id="professions-count">—</h3><p>Профессий</p></div>
+                    <div class="stat-item"><h3>4</h3><p>Направления</p></div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <button class="btn btn-secondary" id="startTestBtn2">
-                    <i class="fas fa-play"></i> Начать тестирование
-                </button>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="professions" id="professions">
-        <div class="container">
-            <h2>Каталог профессий</h2>
-            <div class="filter-buttons" id="filterButtons">
-                <button class="filter-btn active" data-cat="all">Все</button>
-                <button class="filter-btn" data-cat="it"><i class="fas fa-code"></i> IT</button>
-                <button class="filter-btn" data-cat="design"><i class="fas fa-paint-brush"></i> Дизайн</button>
-                <button class="filter-btn" data-cat="science"><i class="fas fa-flask"></i> Наука</button>
-                <button class="filter-btn" data-cat="business"><i class="fas fa-chart-bar"></i> Бизнес</button>
-            </div>
-            <div class="profession-grid" id="professionsGrid">
-                <div style="text-align:center; padding: 40px; color: var(--gray-color); grid-column: 1/-1;">
-                    <i class="fas fa-spinner fa-spin" style="font-size:32px; margin-bottom:12px; display:block;"></i>
-                    Загрузка профессий...
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="team" id="team">
-        <div class="container">
-            <h2>Команда проекта</h2>
-            <div class="team-grid">
-                <div class="team-member"><div class="team-member-avatar">РР</div><h4>Рабаданов Руслан</h4><p>Координатор проекта</p></div>
-                <div class="team-member"><div class="team-member-avatar">ФМ</div><h4>Фокина Мария</h4><p>Связь с партнёрами</p></div>
-                <div class="team-member"><div class="team-member-avatar">ОА</div><h4>Ощепкова Алина</h4><p>Ответственная за содержание</p></div>
-                <div class="team-member"><div class="team-member-avatar">НС</div><h4>Нерсесян Самвел</h4><p>Аналитика и отчёт</p></div>
-                <div class="team-member"><div class="team-member-avatar">КС</div><h4>Кочян Сергей</h4><p>Технический разработчик</p></div>
-                <div class="team-member"><div class="team-member-avatar">ФЮ</div><h4>Федотов Юрий</h4><p>Медиакоординатор</p></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="contact" id="contact">
-        <div class="container">
-            <h2>Свяжитесь с нами</h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <p><i class="fas fa-university"></i> Сочинский государственный университет</p>
-                    <p><i class="fas fa-map-marker-alt"></i> г. Сочи, ул. Пластунская, 94</p>
-                    <p><i class="fas fa-envelope"></i> info@tochkavibora.ru</p>
-                    <p><i class="fas fa-phone"></i> +7 (862) 000-00-00</p>
-                    <div class="contact-socials">
-                        <a href="#" title="ВКонтакте"><i class="fab fa-vk"></i></a>
-                        <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
-                        <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+        <section class="about" id="about">
+            <div class="container">
+                <h2>Как это работает?</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>Пройди тест</h3>
+                        <p>Ответь на вопросы о своих интересах, навыках и предпочтениях</p>
+                    </div>
+                    <div class="about-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Получи анализ</h3>
+                        <p>Система проанализирует твои ответы и подберёт подходящие профессии</p>
+                    </div>
+                    <div class="about-card">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>Выбери путь</h3>
+                        <p>Изучи информацию о профессиях и учебных заведениях</p>
                     </div>
                 </div>
-                <div class="contact-form">
-                    <form id="feedbackForm">
-                        <input type="text" placeholder="Ваше имя" required>
-                        <input type="email" placeholder="Ваш email" required>
-                        <textarea placeholder="Ваше сообщение" rows="4"></textarea>
-                        <button type="submit" class="btn btn-secondary">Отправить</button>
-                    </form>
+            </div>
+        </section>
+
+        <section class="testing" id="testing">
+            <div class="container">
+                <h2>Этапы тестирования</h2>
+                <div class="test-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Диагностика интересов</h3>
+                        <p>20–30 вопросов о твоих увлечениях и предпочтениях</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Оценка навыков</h3>
+                        <p>Определим твои сильные стороны и способности</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Рекомендации</h3>
+                        <p>Получи топ-5 профессий с подробным описанием</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Персональный отчёт</h3>
+                        <p>Сохрани результаты в личном кабинете</p>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn btn-secondary" id="startTestBtn2">
+                        <i class="fas fa-play"></i> Начать тестирование
+                    </button>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-links">
-                <a href="#">Политика конфиденциальности</a>
-                <a href="#">Пользовательское соглашение</a>
-                <a href="#">Для родителей</a>
-                <a href="#">Для учителей</a>
+        <section class="professions" id="professions">
+            <div class="container">
+                <h2>Каталог профессий</h2>
+                <div class="filter-buttons" id="filterButtons">
+                    <button class="filter-btn active" data-cat="all">Все</button>
+                    <button class="filter-btn" data-cat="it"><i class="fas fa-code"></i> IT</button>
+                    <button class="filter-btn" data-cat="design"><i class="fas fa-paint-brush"></i> Дизайн</button>
+                    <button class="filter-btn" data-cat="science"><i class="fas fa-flask"></i> Наука</button>
+                    <button class="filter-btn" data-cat="business"><i class="fas fa-chart-bar"></i> Бизнес</button>
+                </div>
+                <div class="profession-grid" id="professionsGrid">
+                    <div style="text-align:center; padding: 40px; color: var(--gray-color); grid-column: 1/-1;">
+                        <i class="fas fa-spinner fa-spin" style="font-size:32px; margin-bottom:12px; display:block;"></i>
+                        Загрузка профессий...
+                    </div>
+                </div>
             </div>
-            <p>&copy; 2026 Точка выбора. Все права защищены.</p>
-            <p style="font-size: 12px; margin-top: 8px; opacity: 0.6;">Проект студентов Сочинского государственного университета</p>
-        </div>
-    </footer>
+        </section>
 
-    <!-- Модалки -->
-    <div class="modal" id="testModal">
-        <div class="modal-content">
-            <span class="modal-close" data-modal="testModal">&times;</span>
-            <h3 style="margin-bottom: 20px;">Профориентационный тест</h3>
-            <div id="testContainer"></div>
-        </div>
-    </div>
-    <div class="modal" id="professionModal">
-        <div class="modal-content">
-            <span class="modal-close" data-modal="professionModal">&times;</span>
-            <div id="professionDetail"></div>
-        </div>
-    </div>
-    <div class="modal" id="authModal">
-        <div class="modal-content" style="max-width: 440px;">
-            <span class="modal-close" data-modal="authModal">&times;</span>
-            <div id="authContainer"></div>
-        </div>
-    </div>
-    <div class="modal" id="profileModal">
-        <div class="modal-content" style="max-width: 480px;">
-            <span class="modal-close" data-modal="profileModal">&times;</span>
-            <div id="profileContainer"></div>
-        </div>
-    </div>
+        <section class="team" id="team">
+            <div class="container">
+                <h2>Команда проекта</h2>
+                <div class="team-grid">
+                    <div class="team-member"><div class="team-member-avatar">РР</div><h4>Рабаданов Руслан</h4><p>Координатор проекта</p></div>
+                    <div class="team-member"><div class="team-member-avatar">ФМ</div><h4>Фокина Мария</h4><p>Связь с партнёрами</p></div>
+                    <div class="team-member"><div class="team-member-avatar">ОА</div><h4>Ощепкова Алина</h4><p>Ответственная за содержание</p></div>
+                    <div class="team-member"><div class="team-member-avatar">НС</div><h4>Нерсесян Самвел</h4><p>Аналитика и отчёт</p></div>
+                    <div class="team-member"><div class="team-member-avatar">КС</div><h4>Кочян Сергей</h4><p>Технический разработчик</p></div>
+                    <div class="team-member"><div class="team-member-avatar">ФЮ</div><h4>Федотов Юрий</h4><p>Медиакоординатор</p></div>
+                </div>
+            </div>
+        </section>
 
-    <!-- Тост-уведомления -->
-    <div id="toast-container"></div>
+        <section class="contact" id="contact">
+            <div class="container">
+                <h2>Свяжитесь с нами</h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p><i class="fas fa-university"></i> Сочинский государственный университет</p>
+                        <p><i class="fas fa-map-marker-alt"></i> г. Сочи, ул. Пластунская, 94</p>
+                        <p><i class="fas fa-envelope"></i> info@tochkavibora.ru</p>
+                        <p><i class="fas fa-phone"></i> +7 (862) 000-00-00</p>
+                        <div class="contact-socials">
+                            <a href="#" title="ВКонтакте"><i class="fab fa-vk"></i></a>
+                            <a href="#" title="Telegram"><i class="fab fa-telegram"></i></a>
+                            <a href="#" title="YouTube"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form id="feedbackForm">
+                            <input type="text" placeholder="Ваше имя" aria-label="Ваше имя" required>
+                            <input type="email" placeholder="Ваш email" aria-label="Ваш email" required>
+                            <textarea placeholder="Ваше сообщение" rows="4" aria-label="Ваше сообщение"></textarea>
+                            <button type="submit" class="btn btn-secondary">Отправить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <script type="module" src="js/main.js"></script>
+        <footer>
+            <div class="container">
+                <div class="footer-links">
+                    <a href="#">Политика конфиденциальности</a>
+                    <a href="#">Пользовательское соглашение</a>
+                    <a href="#">Для родителей</a>
+                    <a href="#">Для учителей</a>
+                </div>
+                <p>&copy; 2026 Точка выбора. Все права защищены.</p>
+                <p style="font-size: 12px; margin-top: 8px; opacity: 0.6;">Проект студентов Сочинского государственного университета</p>
+            </div>
+        </footer>
+
+        <div class="modal" id="testModal">
+            <div class="modal-content">
+                <span class="modal-close" data-modal="testModal">&times;</span>
+                <h3 style="margin-bottom: 20px;">Профориентационный тест</h3>
+                <div id="testContainer"></div>
+            </div>
+        </div>
+        <div class="modal" id="professionModal">
+            <div class="modal-content">
+                <span class="modal-close" data-modal="professionModal">&times;</span>
+                <div id="professionDetail"></div>
+            </div>
+        </div>
+        <div class="modal" id="authModal">
+            <div class="modal-content" style="max-width: 440px;">
+                <span class="modal-close" data-modal="authModal">&times;</span>
+                <div id="authContainer"></div>
+            </div>
+        </div>
+        <div class="modal" id="profileModal">
+            <div class="modal-content" style="max-width: 480px;">
+                <span class="modal-close" data-modal="profileModal">&times;</span>
+                <div id="profileContainer"></div>
+            </div>
+        </div>
+
+        <div id="toast-container"></div>
+
+    </div> <script type="module" src="js/main.js"></script>
     <script type="module" src="js/stats.js"></script>
+    <script>
+    function fixParallaxHeight() {
+        const siteContent = document.querySelector('.site-content');
+        const footer = document.querySelector('footer');
+        const parallaxBg = document.querySelector('.parallax-bg');
+        
+        if (siteContent && footer && parallaxBg) {
+            // Находим координату низа футера относительно верха страницы
+            const footerBottom = footer.offsetTop + footer.offsetHeight;
+            // Принудительно задаем фону высоту ровно до конца футера
+            parallaxBg.style.height = footerBottom + 'px';
+        }
+    }
+
+    // Запускаем при загрузке страницы и при изменении размеров окна
+    window.addEventListener('load', fixParallaxHeight);
+    window.addEventListener('resize', fixParallaxHeight);
+    
+    // На всякий случай запустим еще раз через секунду (если картинки/каталог долго грузятся)
+    setTimeout(fixParallaxHeight, 1000);
+</script>
 </body>
 </html>
