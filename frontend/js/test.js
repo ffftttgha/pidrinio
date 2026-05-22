@@ -52,6 +52,30 @@ function renderQuestion() {
                         <span>${opt.text}</span>
                     </label>
                 `).join('')}
+                <label class="option-label" id="otherOptionLabel">
+                    <input type="radio" name="q" value="other" id="otherRadio">
+                    <span>Другое</span>
+                </label>
+                <div id="otherInputWrapper" style="display:none; margin-top: 8px; padding: 0 4px;">
+                    <input
+                        type="text"
+                        id="otherText"
+                        placeholder="Напишите свой вариант..."
+                        style="
+                            width: 100%;
+                            padding: 10px 14px;
+                            border: 1.5px solid var(--border-color);
+                            border-radius: 10px;
+                            font-size: 14px;
+                            font-family: inherit;
+                            background: var(--bg-color, #fff);
+                            color: inherit;
+                            outline: none;
+                            box-sizing: border-box;
+                            transition: border-color 0.2s;
+                        "
+                    />
+                </div>
             </div>
             <div style="margin-top: 20px; display: flex; gap: 12px; align-items: center;">
                 ${currentIndex > 0 ? `<button id="prevBtn" class="btn btn-outline" style="padding: 10px 20px;">← Назад</button>` : ''}
@@ -62,6 +86,43 @@ function renderQuestion() {
         </div>
     `;
 
+    // Показывать поле ввода при выборе "Другое"
+    const otherRadio = document.getElementById('otherRadio');
+    const otherInputWrapper = document.getElementById('otherInputWrapper');
+    const otherTextInput = document.getElementById('otherText');
+
+    container.querySelectorAll('input[name="q"]').forEach(radio => {
+        radio.addEventListener('change', () => {
+            if (radio.value === 'other') {
+                otherInputWrapper.style.display = 'block';
+                otherTextInput.focus();
+            } else {
+                otherInputWrapper.style.display = 'none';
+                otherTextInput.value = '';
+            }
+        });
+    });
+
+    otherTextInput.addEventListener('focus', () => {
+        otherTextInput.style.borderColor = 'var(--primary-color)';
+    });
+    otherTextInput.addEventListener('blur', () => {
+        otherTextInput.style.borderColor = 'var(--border-color)';
+    });
+
+    // Восстановить предыдущий ответ при возврате назад
+    if (currentIndex < userAnswers.length) {
+        const prev = userAnswers[currentIndex];
+        if (prev && prev.cat === 'other') {
+            otherRadio.checked = true;
+            otherInputWrapper.style.display = 'block';
+            otherTextInput.value = prev.text || '';
+        } else if (prev) {
+            const match = container.querySelector(`input[value="${prev.cat}"]`);
+            if (match) match.checked = true;
+        }
+    }
+
     document.getElementById('nextBtn').addEventListener('click', () => saveAnswer());
     document.getElementById('prevBtn')?.addEventListener('click', () => {
         currentIndex--;
@@ -69,30 +130,55 @@ function renderQuestion() {
         renderQuestion();
     });
 
-    // Двойной клик по варианту — сразу переходит дальше
+    // Двойной клик — мгновенный переход (кроме "Другое")
     container.querySelectorAll('.option-label').forEach(label => {
-        label.addEventListener('dblclick', () => saveAnswer());
+        label.addEventListener('dblclick', () => {
+            const radio = label.querySelector('input[type="radio"]');
+            if (radio && radio.value !== 'other') {
+                saveAnswer();
+            }
+        });
     });
 }
 
 function saveAnswer() {
     const selected = document.querySelector('input[name="q"]:checked');
     if (!selected) {
-        // Подсветить вопрос
         const opts = document.querySelectorAll('.option-label');
         opts.forEach(o => o.style.borderColor = '#ef4444');
         setTimeout(() => opts.forEach(o => o.style.borderColor = ''), 1500);
         showToast('Выберите вариант ответа', 'error');
         return;
     }
-    userAnswers.push(selected.value);
+
+    if (selected.value === 'other') {
+        const otherText = document.getElementById('otherText')?.value?.trim();
+        if (!otherText) {
+            const otherInput = document.getElementById('otherText');
+            if (otherInput) {
+                otherInput.style.borderColor = '#ef4444';
+                setTimeout(() => otherInput.style.borderColor = 'var(--border-color)', 1500);
+            }
+            showToast('Пожалуйста, напишите свой вариант', 'error');
+            return;
+        }
+        userAnswers.push({ cat: 'other', text: otherText });
+    } else {
+        userAnswers.push({ cat: selected.value, text: null });
+    }
+
     currentIndex++;
     renderQuestion();
 }
 
 async function showResult() {
     const counts = { it: 0, design: 0, science: 0, business: 0 };
-    userAnswers.forEach(cat => { if (counts[cat] !== undefined) counts[cat]++; });
+    userAnswers.forEach(answer => {
+        const cat = typeof answer === 'string' ? answer : answer.cat;
+        if (counts[cat] !== undefined) counts[cat]++;
+        // Ответы "Другое" не учитываются в категориях
+    });
+
     const topCat = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
 
     const catNames = {
@@ -115,8 +201,9 @@ async function showResult() {
            </div>`
         : '';
 
-    // Процентное распределение
-    const total = userAnswers.length;
+    const countedAnswers = userAnswers.filter(a => (typeof a === 'string' ? a : a.cat) !== 'other');
+    const total = countedAnswers.length;
+
     const barsHTML = Object.entries(catNames).map(([key, name]) => {
         const pct = total > 0 ? Math.round((counts[key] / total) * 100) : 0;
         return `<div style="margin-bottom:8px;">
@@ -129,6 +216,16 @@ async function showResult() {
         </div>`;
     }).join('');
 
+    const otherAnswers = userAnswers.filter(a => (typeof a === 'string' ? a : a.cat) === 'other');
+    const otherHTML = otherAnswers.length > 0
+        ? `<div style="margin-top: 16px; padding: 12px 14px; background: var(--border-color, #f3f4f6); border-radius: 10px;">
+            <p style="font-size: 13px; color: var(--gray-color); margin-bottom: 8px; font-weight: 600;">Ваши собственные варианты (${otherAnswers.length}):</p>
+            <ul style="margin: 0; padding-left: 18px; font-size: 13px;">
+                ${otherAnswers.map(a => `<li style="margin-bottom: 4px;">${a.text}</li>`).join('')}
+            </ul>
+           </div>`
+        : '';
+
     const container = document.getElementById('testContainer');
     container.innerHTML = `
         <div class="result-box">
@@ -139,6 +236,7 @@ async function showResult() {
             <div style="margin: 20px 0; text-align: left;">
                 <h4 style="margin-bottom: 12px; font-size: 14px; color: var(--gray-color);">Распределение ответов:</h4>
                 ${barsHTML}
+                ${otherHTML}
             </div>
             <div class="result-actions">
                 <button id="saveResultBtn" class="btn btn-secondary">
