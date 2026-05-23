@@ -2,7 +2,7 @@
 <html lang="ru" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=1200">
     <meta name="description" content="Бесплатный онлайн-сервис профориентации для подростков 13-18 лет">
     <title>Точка выбора | Профориентация для подростков</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -10,25 +10,27 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+    <!-- Сферы и фон теперь фиксированы через CSS, живут прямо в body -->
+    <div class="parallax-sphere sphere-1" id="hero-sphere-1"></div>
+    <div class="parallax-sphere sphere-2" id="hero-sphere-2"></div>
+    <div class="parallax-sphere sphere-3" id="hero-sphere-3"></div>
+
     <div class="parallax-bg">
         <div class="parallax-layer layer-1"></div>
         <div class="parallax-layer layer-2"></div>
         <div class="parallax-layer layer-3"></div>
     </div>
 
-    <div class="parallax-sphere sphere-1" id="hero-sphere-1"></div>
-    <div class="parallax-sphere sphere-2" id="hero-sphere-2"></div>
-    <div class="parallax-sphere sphere-3" id="hero-sphere-3"></div>
-
+    <!-- Весь контент сайта -->
     <div class="site-content">
-        
+
         <header>
             <div class="container">
                 <nav>
                     <div class="logo">Точка <span>Выбора</span></div>
                     <ul class="nav-links" id="navLinks">
                         <button class="nav-mobile-close" id="navCloseBtn" aria-label="Закрыть меню">&times;</button>
-                        
                         <li><a href="#home" class="active">Главная</a></li>
                         <li><a href="#about">О проекте</a></li>
                         <li><a href="#testing">Тестирование</a></li>
@@ -234,28 +236,9 @@
 
         <div id="toast-container"></div>
 
-    </div> <script type="module" src="js/main.js"></script>
-    <script type="module" src="js/stats.js"></script>
-    <script>
-    function fixParallaxHeight() {
-        const siteContent = document.querySelector('.site-content');
-        const footer = document.querySelector('footer');
-        const parallaxBg = document.querySelector('.parallax-bg');
-        
-        if (siteContent && footer && parallaxBg) {
-            // Находим координату низа футера относительно верха страницы
-            const footerBottom = footer.offsetTop + footer.offsetHeight;
-            // Принудительно задаем фону высоту ровно до конца футера
-            parallaxBg.style.height = footerBottom + 'px';
-        }
-    }
+    </div>
 
-    // Запускаем при загрузке страницы и при изменении размеров окна
-    window.addEventListener('load', fixParallaxHeight);
-    window.addEventListener('resize', fixParallaxHeight);
-    
-    // На всякий случай запустим еще раз через секунду (если картинки/каталог долго грузятся)
-    setTimeout(fixParallaxHeight, 1000);
-</script>
+    <script type="module" src="./js/main.js"></script>
+    <script type="module" src="./js/stats.js"></script>
 </body>
 </html>

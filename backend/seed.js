@@ -233,6 +233,11 @@ const questions = [
 ];
 
 async function seed() {
+  const existingCount = await Question.countDocuments();
+  if (existingCount > 0) {
+      console.log(`Seeder: в БД уже ${existingCount} вопросов. Пропускаем заполнение.`);
+      process.exit(0);
+  }
   await mongoose.connect(process.env.MONGO_URI);
   await Profession.deleteMany();
   await Question.deleteMany();

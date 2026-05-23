@@ -3,7 +3,6 @@ import { loadProfessions } from './professions.js';
 import { loadUserFromStorage, updateStatsDisplay } from './auth.js';
 import { initModalClosers } from './utils.js';
 
-// Храним текущее значение скролла для совмещения эффектов
 let currentScroll = 0;
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -26,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
     updateThemeButton(savedTheme);
-    
+
     themeToggle.addEventListener('click', () => {
         const current = document.documentElement.getAttribute('data-theme');
         const newTheme = current === 'light' ? 'dark' : 'light';
@@ -36,16 +35,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 4. ПЛАВНАЯ ПРОКРУТКА ССЫЛОК
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            const href = this.getAttribute('href');
-            if (href === '#') return;
-            const target = document.querySelector(href);
+
+            e.preventDefault();
+
+            const target = document.querySelector(this.getAttribute('href'));
+
             if (target) {
-                e.preventDefault();
-                const headerH = document.querySelector('header')?.offsetHeight || 70;
-                const y = target.getBoundingClientRect().top + window.scrollY - headerH;
-                window.scrollTo({ top: y, behavior: 'smooth' });
+                const headerH =
+                    document.querySelector('header')?.offsetHeight || 70;
+
+                const y =
+                    target.getBoundingClientRect().top +
+                    window.scrollY -
+                    headerH -
+                    20;
+
+                window.scrollTo({
+                    top: y,
+                    behavior: 'smooth'
+                });
+
                 closeMobileMenu();
             }
         });
@@ -53,41 +64,60 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // 5. МОБИЛЬНОЕ МЕНЮ
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navCloseBtn = document.getElementById('navCloseBtn'); // ИЗМЕНЕНО: добавили кнопку-крестик
+    const navCloseBtn = document.getElementById('navCloseBtn');
     const navLinks = document.getElementById('navLinks');
     const navOverlay = document.getElementById('navOverlay');
 
     function openMobileMenu() {
         navLinks.classList.add('mobile-open');
         navOverlay.classList.add('open');
-        if (mobileMenuBtn.querySelector('i')) mobileMenuBtn.querySelector('i').className = 'fas fa-times';
+
+        const icon = mobileMenuBtn.querySelector('i');
+
+        if (icon) {
+            icon.className = 'fas fa-times';
+        }
+
         document.body.style.overflow = 'hidden';
     }
 
-    window.closeMobileMenu = function() {
+    function closeMobileMenu() {
         navLinks.classList.remove('mobile-open');
         navOverlay.classList.remove('open');
-        if (mobileMenuBtn.querySelector('i')) mobileMenuBtn.querySelector('i').className = 'fas fa-bars';
+
+        const icon = mobileMenuBtn.querySelector('i');
+
+        if (icon) {
+            icon.className = 'fas fa-bars';
+        }
+
         document.body.style.overflow = '';
-    };
+    }
 
     mobileMenuBtn.addEventListener('click', () => {
-        if (navLinks.classList.contains('mobile-open')) closeMobileMenu();
-        else openMobileMenu();
+        if (navLinks.classList.contains('mobile-open')) {
+            closeMobileMenu();
+        } else {
+            openMobileMenu();
+        }
     });
-    
-    // ИЗМЕНЕНО: Вешаем закрытие на крестик и оверлей
-    if (navCloseBtn) navCloseBtn.addEventListener('click', closeMobileMenu);
-    if (navOverlay) navOverlay.addEventListener('click', closeMobileMenu);
+
+    if (navCloseBtn) {
+        navCloseBtn.addEventListener('click', closeMobileMenu);
+    }
+
+    if (navOverlay) {
+        navOverlay.addEventListener('click', closeMobileMenu);
+    }
 
     // 6. АКТИВНЫЙ ПУНКТ МЕНЮ ПРИ СКРОЛЛЕ
     const sections = document.querySelectorAll('section[id]');
     const navItems = document.querySelectorAll('.nav-links a[href^="#"]');
-    
+
     window.addEventListener('scroll', () => {
         currentScroll = window.scrollY;
         const scrollYWithOffset = currentScroll + 100;
-        
+
         sections.forEach(section => {
             const top = section.offsetTop;
             const height = section.offsetHeight;
@@ -112,7 +142,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     initParallaxAndMouseEffects();
 });
 
-// Обновление иконки и текста темы
 function updateThemeButton(theme) {
     const btn = document.getElementById('themeToggle');
     if (!btn) return;
@@ -136,22 +165,17 @@ function init3DTilt() {
             const y = e.clientY - rect.top;
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-
             const rotateX = ((centerY - y) / centerY) * 12;
             const rotateY = ((x - centerX) / centerX) * 12;
-
             element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
         });
-
         element.addEventListener('mouseleave', () => {
             element.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
         });
     }
 
-    // Статические карточки
     document.querySelectorAll('.about-card, .step, .team-member').forEach(card => applyTiltEffect(card));
 
-    // Динамические карточки профессий
     const gridContainer = document.getElementById('professionsGrid');
     if (gridContainer) {
         const observer = new MutationObserver((mutations) => {
@@ -165,7 +189,7 @@ function init3DTilt() {
     }
 }
 
-// ===== ИЗМЕНЕНО: ОБЪЕДИНЕННЫЙ ЭФФЕКТ МЫШИ И СКРОЛЛА ДЛЯ СФЕР И ПАРАЛЛАКСА =====
+// ===== ПАРАЛЛАКС И ЭФФЕКТ МЫШИ =====
 function initParallaxAndMouseEffects() {
     const layer1 = document.querySelector('.layer-1');
     const layer2 = document.querySelector('.layer-2');
@@ -174,9 +198,8 @@ function initParallaxAndMouseEffects() {
     const sphere2 = document.getElementById('hero-sphere-2');
     const sphere3 = document.getElementById('hero-sphere-3');
 
-    // Эффект движения мыши (управляет смещением через CSS переменные)
     window.addEventListener('mousemove', (e) => {
-        const mouseX = (e.clientX / window.innerWidth) - 0.5; // от -0.5 до 0.5
+        const mouseX = (e.clientX / window.innerWidth) - 0.5;
         const mouseY = (e.clientY / window.innerHeight) - 0.5;
 
         if (sphere1) {
@@ -193,7 +216,6 @@ function initParallaxAndMouseEffects() {
         }
     });
 
-    // Эффект скролла (управляет параллаксом слоев и сфер)
     window.addEventListener('scroll', () => {
         const scrollValue = window.scrollY;
 

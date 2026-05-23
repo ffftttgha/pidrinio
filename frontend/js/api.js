@@ -1,4 +1,7 @@
-const API_BASE = 'http://localhost:5000/api';
+// Определяем базовый URL: в dev без Docker идёт на 5000, в prod через Nginx — относительный путь
+export const API_BASE = window.location.hostname === 'localhost' && window.location.port !== ''
+    ? 'http://localhost:5000/api'
+    : '/api';
 
 async function request(endpoint, method = 'GET', body = null, token = null) {
     const headers = { 'Content-Type': 'application/json' };

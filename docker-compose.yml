@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/career_guidance
+      - JWT_SECRET=your_secret_here
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  seeder:
+    build: ./backend
+    command: ["node", "seed.js"]
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/career_guidance
+    depends_on:
+      mongo:
+        condition: service_healthy
+    restart: "no"
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  mongo_data:
