@@ -205,17 +205,18 @@ nav {
     position: fixed;
     top: 0;
     right: 0;
-    width: min(280px, 85vw); /* не выходит за экран на узких телефонах */
-    height: 100%;
+    width: min(280px, 85vw);
+    height: auto;
+    max-height: 100vh;
     background: var(--header-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    padding: 80px 24px 30px;
+    padding: 20px 16px 24px;
     gap: 4px;
     box-shadow: -4px 0 20px rgba(0,0,0,0.15);
     z-index: 1001;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* плавный скролл на iOS */
+    overflow-y: visible;
+    list-style: none;
 }
 .nav-links.mobile-open li { width: 100%; }
 .nav-links.mobile-open a {
@@ -235,10 +236,19 @@ nav {
 .nav-links.mobile-open ~ * .nav-mobile-close,
 .nav-mobile-close {
     display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--text-color);
+    align-self: flex-end;
+    padding: 4px 8px;
+    margin-bottom: 8px;
+    line-height: 1;
 }
-.nav-links.mobile-open + .nav-mobile-close,
+
 .nav-links.mobile-open .nav-mobile-close {
-    display: block;
+    display: block !important;
 }
 
 /* ===== HERO (ИСПРАВЛЕНО) ===== */
@@ -323,7 +333,7 @@ section h2::after {
 }
 
 .about-card *, .step *, .profession-card *, .team-member * {
-    transform: translateZ(30px);
+    transform: none;
 }
 
 .about-card:hover, .step:hover, .profession-card:hover, .team-member:hover {
@@ -334,7 +344,7 @@ section h2::after {
     box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
 }
 
-.about-card i { font-size: 46px; color: var(--primary-color); margin-bottom: 20px; display: block; transform: translateZ(50px); }
+.about-card i { font-size: 46px; color: var(--primary-color); margin-bottom: 20px; display: block; transform: none; }
 .about-card h3, .step h3 { margin-bottom: 12px; font-size: 20px; }
 .step-number {
     width: 55px; height: 55px;
@@ -344,7 +354,7 @@ section h2::after {
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 20px; font-weight: bold; font-size: 20px;
     box-shadow: 0 4px 10px rgba(249,115,22,0.3);
-    transform: translateZ(50px);
+    transform: none;
 }
 .test-steps { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 
@@ -392,7 +402,7 @@ section h2::after {
     margin: 0 auto 16px;
     color: white; font-size: 26px; font-weight: bold;
     box-shadow: 0 6px 15px rgba(37,99,235,0.2);
-    transform: translateZ(50px);
+    transform: none;
 }
 .team-member h4 { font-size: 16px; margin-bottom: 6px; }
 .team-member p { font-size: 13px; color: var(--gray-color); font-weight: 500; }
@@ -809,10 +819,272 @@ html, body {
     max-width: 100%;
 }
 
-* {
-    backdrop-filter: none !important;
+
+/* ===== АДАПТАЦИЯ ПОД МОБИЛЬНЫЕ ===== */
+
+/* Планшеты */
+@media (max-width: 1024px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .nav-links {
+        gap: 14px;
+    }
+    .nav-links li a {
+        font-size: 13px;
+    }
 }
 
-.about-card, .step, .profession-card, .team-member {
-    transform: none !important;
+/* Мобильные */
+@media (max-width: 768px) {
+
+    /* --- Навигация --- */
+    .nav-links {
+        display: none !important;
+    }
+    .nav-links.mobile-open {
+        display: flex !important;
+    }
+    .mobile-menu-btn {
+        display: block !important;
+    }
+    .theme-toggle span {
+        display: none;
+    }
+    .theme-toggle {
+        padding: 7px 10px;
+    }
+
+    /* --- Hero --- */
+    .hero {
+        padding: 150px 0 60px;
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+    .hero h1 {
+        font-size: 28px;
+        letter-spacing: -0.5px;
+    }
+    .hero p {
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .hero-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    /* --- Заголовки --- */
+    section h2 {
+        font-size: 24px;
+        margin-bottom: 28px;
+    }
+
+    /* --- Секции --- */
+    .stats,
+    .about,
+    .testing,
+    .professions,
+    .team,
+    .contact,
+    section {
+        padding: 48px 0 !important;
+    }
+
+    /* --- Статистика --- */
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+    .stat-item {
+        padding: 20px 14px;
+    }
+    .stat-item h3 {
+        font-size: 28px;
+    }
+
+    /* --- О проекте --- */
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Шаги --- */
+    .test-steps {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Профессии --- */
+    .profession-grid {
+        grid-template-columns: 1fr;
+    }
+    .filter-buttons {
+        gap: 8px;
+    }
+    .filter-btn {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    /* --- Команда --- */
+    .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .team-member {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* --- Контакты --- */
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .contact {
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+    }
+
+    /* --- Футер --- */
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* --- Модалки: выезжают снизу --- */
+    .modal {
+        padding: 0;
+        align-items: flex-end;
+    }
+    .modal-content {
+        border-radius: 20px 20px 0 0;
+        max-height: 90dvh;
+        padding: 24px 18px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* --- Тост --- */
+    #toast-container {
+        bottom: 12px;
+        right: 12px;
+        left: 12px;
+    }
+    .toast {
+        max-width: 100%;
+    }
+
+    /* --- Декоративные сферы --- */
+    .sphere-1 { width: 200px; height: 200px; }
+    .sphere-2 { width: 260px; height: 260px; }
+    .sphere-3 { width: 180px; height: 180px; }
+
+    .parallax-sphere,
+    .parallax-bg,
+    .parallax-layer,
+    .layer-1,
+    .layer-2,
+    .layer-3 {
+        display: none !important;
+    }
+
+    .hero {
+        transform: none !important;
+        will-change: auto !important;
+    }
+
+    .site-content {
+        transform: none !important;
+    }
+
+    .hero .container {
+        padding-top: 30px;
+    }
+
+    /* --- Модалка теста --- */
+    .modal {
+        padding: 0;
+        align-items: flex-end;
+    }
+    .modal-content {
+        border-radius: 20px 20px 0 0;
+        max-height: 85dvh;
+        padding: 20px 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+    .question p {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 10px;
+    }
+    .option-label {
+        padding: 10px 12px;
+        font-size: 13px;
+        gap: 8px;
+    }
+    .option-label input[type="radio"] {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+    }
+    .question-options {
+        gap: 7px;
+    }
+    .question-progress {
+        margin-bottom: 10px;
+    }
+    .result-box h3 {
+        font-size: 18px;
+    }
+    .result-category {
+        font-size: 15px;
+        padding: 8px 18px;
+    }
+    .result-professions li {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+}
+
+/* Маленькие телефоны */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 14px;
+    }
+    .hero h1 {
+        font-size: 22px;
+    }
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    .stat-item h3 {
+        font-size: 22px;
+    }
+    .team-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .team-member {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .about-card,
+    .step {
+        padding: 22px 16px;
+    }
+    .profile-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+    .result-actions {
+        flex-direction: column;
+    }
+    .result-actions .btn {
+        width: 100%;
+    }
 }

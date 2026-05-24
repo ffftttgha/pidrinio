@@ -191,6 +191,8 @@ function init3DTilt() {
 
 // ===== ПАРАЛЛАКС И ЭФФЕКТ МЫШИ =====
 function initParallaxAndMouseEffects() {
+    if (window.innerWidth <= 768) return;
+    
     const layer1 = document.querySelector('.layer-1');
     const layer2 = document.querySelector('.layer-2');
     const layer3 = document.querySelector('.layer-3');
